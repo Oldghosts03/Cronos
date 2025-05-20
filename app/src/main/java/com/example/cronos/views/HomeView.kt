@@ -22,28 +22,25 @@ import com.example.cronos.components.MainTitle
 @Composable
 fun HomeView(navController: NavController){
     Scaffold(
-        topBar = {
+        topBar={
             CenterAlignedTopAppBar(
                 title = { MainTitle(title = "Crono App")},
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                colors= TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary
                 )
             )
         }, floatingActionButton = {
-            FloatButton {
+            FloatButton{
                 navController.navigate("AddView")
             }
         }
     ){
-        ContentHomeView(it, navController)
+        ContentHomeView(it,navController)
     }
 }
-
 @Composable
-fun ContentHomeView(it: PaddingValues, navController: NavController){
+fun ContentHomeView(it:PaddingValues,navController: NavController){
     Column(
         modifier = Modifier.padding(it)
-    ){
-
-    }
+    ){}
 }
