@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -26,13 +27,20 @@ import androidx.navigation.NavController
 import com.example.cronoapps.R
 import com.example.cronos.components.CircleButton
 import com.example.cronos.components.MainIconButton
+import com.example.cronos.components.MainTextField
 import com.example.cronos.components.MainTitle
 import com.example.cronos.components.formatTiempo
+import com.example.cronos.model.Cronos
 import com.example.cronos.viewModels.CronometroViewModel
+import com.example.cronos.viewModels.CronosViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddView(navController: NavController,cronometroVM: CronometroViewModel){
+fun AddView(
+    navController: NavController,
+    cronometroVM: CronometroViewModel,
+    cronosVM: CronosViewModel
+){
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -48,12 +56,12 @@ fun AddView(navController: NavController,cronometroVM: CronometroViewModel){
             )
         }
     ) {
-        ContentAddView(it, navController,cronometroVM)
+        ContentAddView(it, navController,cronometroVM, cronosVM)
     }
 }
 
 @Composable
-fun ContentAddView(it:PaddingValues,navController: NavController,cronometroVM: CronometroViewModel){
+fun ContentAddView(it:PaddingValues,navController: NavController,cronometroVM: CronometroViewModel, cronosVM: CronosViewModel){
     val state = cronometroVM.state
 
     LaunchedEffect(state.cronometroActivo) {
@@ -108,6 +116,25 @@ fun ContentAddView(it:PaddingValues,navController: NavController,cronometroVM: C
             }
         }
 
+        if(state.showTextField){
+            MainTextField(
+                value = state.title,
+                onValueChange = {cronometroVM.onValue(it)},
+                label = "Titulo",
+            )
+
+            Button(onClick = {
+                cronosVM.addCrono(
+                    Cronos(
+                        title = state.title,
+                        crono = cronometroVM.tiempo
+                    )
+                )
+                navController.popBackStack()
+            }) {
+                Text(text = "Guardar")
+            }
+        }
 
     }
 }

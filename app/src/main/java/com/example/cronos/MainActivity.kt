@@ -18,8 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.cronos.navigation.NavManager
 import com.example.cronos.ui.theme.CronosTheme
 import com.example.cronos.viewModels.CronometroViewModel
+import com.example.cronos.viewModels.CronosViewModel
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -28,13 +28,14 @@ class MainActivity : ComponentActivity() {
         // Configuración de Edge-to-Edge
         //enableEdgeToEdge()
         val cronometroVM: CronometroViewModel by viewModels()
+        val cronosVM: CronosViewModel by viewModels()
         setContent {
             CronosTheme {
                 Surface (
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavManager(cronometroVM)
+                    NavManager(cronometroVM, cronosVM)
                 }
             }
         }
